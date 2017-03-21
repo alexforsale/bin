@@ -1,0 +1,96 @@
+#!/bin/bash
+# Christian alexander <alexforsale@yahoo.com>
+# bash script for saving android logcats.
+#
+
+# default location of logfiles
+if [ -z "$1" ]; then
+    echo "using default path for logs (~/logs)"
+    echo "you could also specify the directory."
+    LOGPATH=~/logs
+else
+    echo "using $1 as log directory"
+    LOGPATH="$1"
+fi
+
+# name the logfile by date created
+LOGFILE=$( date +%Y-%m-%d_%H-%M).log
+
+# check if adb is installed
+check_adb()
+{
+command -v adb >/dev/null 2>&1 || { echo >&2 "adb is not installed.  Aborting."; exit 1; }
+}
+
+# test if device is connected
+check_device()
+{
+    connected_device=`adb devices | grep -cw device`
+    connected_recovery=`adb devices | grep -cw recovery`
+    case $connected_device in
+        1)
+            echo "device detected"
+            # device-specifics, needs sed because of last character from getprop
+            # messes the actual name
+            DEVICE=`adb shell getprop ro.product.name | sed s'/.$//'`
+            FLAVOR=`adb shell getprop ro.build.flavor | sed s'/.$//'`
+
+            # in case $DEVICE is null
+            if [ -z $DEVICE ]; then
+                echo "device name is unknown"
+                $DEVICE="Unknown-device"
+            else
+                echo "device name is $DEVICE"
+            fi
+
+            #also check for $FLAVOR
+            if [ -z $FLAVOR ]; then
+                echo "device flavor is unknown"
+                $FLAVOR="Unknown-flavor"
+            else
+                echo "device flavor is $FLAVOR"
+            fi
+            ;;
+        2)
+            echo "more than one device connected"
+            echo "adb can't continue, aborting..."
+            exit 1
+            ;;
+        0)
+            if  [ ! -z $connected_recovery ]; then
+                echo "device currently on recovery mode,"
+                echo "logcat cannot be executed from here, aborting..."
+                exit 1
+            else
+                echo "device not detected, aborting..."
+                exit 1
+            fi
+            ;;
+    esac
+}
+
+# create a device-specific directory
+# useful because i have more than one devices, and the log files
+# must not mixed with other device's logs
+device_path()
+{
+    if [ ! -d "$LOGPATH/$DEVICE/$FLAVOR" ]; then
+        mkdir -p $LOGPATH/$DEVICE/$FLAVOR
+    fi
+    
+    DEVICEPATH=$LOGPATH/$DEVICE/$FLAVOR
+    echo "logfile will be created at $DEVICEPATH/$LOGFILE"
+}
+
+create_log()
+{
+    adb logcat 2>&1 | tee $DEVICEPATH/$LOGFILE
+}
+# now run all the above functions
+check_adb
+check_device
+device_path
+echo "creating logs"
+sleep 3
+create_log
+
