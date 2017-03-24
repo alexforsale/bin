@@ -1,0 +1,14 @@
+#! /bin/bash
+# Christian Alexander <alexforsale@yahoo.com>
+# bash script to automatically serve jekyll
+#
+# usage: basename $0 source_directory destination_directory host
+GEM_HOME=$(ls -t -U | ruby -e 'puts Gem.user_dir')
+GEM_PATH=$GEM_HOME/bin
+
+SOURCE_DIR=$1
+DEST_DIR=$2
+HOSTPATH=$3
+
+cd $SOURCE_DIR
+$GEM_PATH/bundle exec $GEM_PATH/jekyll serve --source $SOURCE_DIR  --destination $DEST_DIR --host $HOSTPATH --incremental >/dev/null &
