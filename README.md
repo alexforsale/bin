@@ -15,3 +15,6 @@ Will create a logfile in ~/logs. Alternate path can be used as a parameter.
 #+begin_src shell
 logcatnow [path]
 #+end_src
+* serve-blog
+
+bash script to automatically serve jekyll
