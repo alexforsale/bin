@@ -23,3 +23,5 @@ bash script to automatically serve jekyll
 #+begin_src shell
 serve-blog source_directory destination_directory host
 #+end_src
+* start-build-android.sh
+a simple script for automating environment setup for aosp and such.
