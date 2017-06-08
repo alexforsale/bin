@@ -8,10 +8,10 @@ current_branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' | sed 's/^. //'`
 # fetch all first
 #git fetch --all --tags
 
+# TODO: simplify this
 branch=`git remote show $1 | grep -v "Fetch" | grep -v "Push" | grep -v "HEAD" | grep -v "Local" | grep -v "Remote" | grep -v '*' | grep -v "up to date" | awk '{print $1}'`
 linenumbers=`echo -n "$branch" | wc -l`
 
-# what is this ****?
 for branches in $branch;
 do
     count=$((count + 1))
