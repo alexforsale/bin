@@ -1,6 +1,7 @@
 #+TITLE: Compilation of My Scripts
 #+AUTHOR: Christian Alexander
 
+A list of scripts I have in my ~/bin directory
 * logcatnow
 
 A script for automatically saves adb logcat outputs into files. By
@@ -25,3 +26,11 @@ serve-blog source_directory destination_directory host
 #+end_src
 * start-build-android.sh
 a simple script for automating environment setup for aosp and such.
+* git-remote-checkout.sh
+a script for creating tracking branches except master, taken from https://stackoverflow.com/questions/67699/how-to-clone-all-remote-branches-in-git
+* org-git-sync.sh
+add org files changes to the repository.
+* push-all-local-branch.sh
+a script to push all local branches to remote repository one by one.
+* update-local-branches.sh
+a script for checking out each remote branches in remote/
