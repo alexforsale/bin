@@ -1,5 +1,9 @@
 #!/bin/sh
 # add org files changes to the repository
+# run this file on cron to run regularly
+# example:
+# 0 * * * * ~/bin/org-git-sync.sh
+# will run the script hourly
 # Christian Alexander <alexforsale@yahoo.com>
 
 REPOS="org org-mode personal-org private-user-setting"
