@@ -6,7 +6,7 @@
 # will run the script hourly
 # Christian Alexander <alexforsale@yahoo.com>
 
-REPOS="org org-mode personal-org private-user-setting"
+REPOS="org org-mode personal-org private-user-settings"
 
 for REPO in $REPOS
 do
