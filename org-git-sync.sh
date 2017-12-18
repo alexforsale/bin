@@ -6,7 +6,7 @@
 # will run the script hourly
 # Christian Alexander <alexforsale@yahoo.com>
 
-REPOS="org personal-org journal"
+REPOS="org-doc"
 
 for REPO in $REPOS
 do
@@ -18,6 +18,7 @@ do
     git add . >/dev/null 2>&1
     git commit -m "$(date)"
     # check if there's internet connection
+    # need =netcat= package
     nc -z 8.8.8.8 53  >/dev/null 2>&1
     online=$?
     if [ $online -eq 0 ]; then
